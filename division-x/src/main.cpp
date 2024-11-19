@@ -85,6 +85,25 @@ void moveRight() {
         }
     }
 }
+// Функция за преместване и обединяване на плочки надолу
+void moveDown() {
+    for (int j = 0; j < 4; j++) {
+        for (int i = 2; i >= 0; i--) {
+            if (bord[i][j] != 0) {
+                int k = i;
+                while (k < 3 && bord[k + 1][j] == 0) {
+                    bord[k + 1][j] = bord[k][j];
+                    bord[k][j] = 0;
+                    k++;
+                }
+                if (k < 3 && bord[k][j] == bord[k + 1][j]) {
+                    bord[k + 1][j] *= 2;
+                    bord[k][j] = 0;
+                }
+            }
+        }
+    }
+}
 
 int main()
 {
@@ -114,7 +133,7 @@ int main()
             addNewTile();
         }
         else if (IsKeyPressed(KEY_DOWN)) {
-            
+            moveDown();
             addNewTile();
         }
 
