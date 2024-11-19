@@ -1,15 +1,15 @@
-#include "raylib.h"
+п»ї#include "raylib.h"
 #include <stdio.h>
 #include <string>
 
 int bord[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
 
-// Функция за добавяне на нова двойка на произволна свободна клетка
+// Г”ГіГ­ГЄГ¶ГЁГї Г§Г  Г¤Г®ГЎГ ГўГїГ­ГҐ Г­Г  Г­Г®ГўГ  Г¤ГўГ®Г©ГЄГ  Г­Г  ГЇГ°Г®ГЁГ§ГўГ®Г«Г­Г  Г±ГўГ®ГЎГ®Г¤Г­Г  ГЄГ«ГҐГІГЄГ 
 void addNewTile() {
     int emptyCells[16][2];
     int emptyCount = 0;
 
-    // Намиране на всички празни клетки
+    // ГЌГ Г¬ГЁГ°Г Г­ГҐ Г­Г  ГўГ±ГЁГ·ГЄГЁ ГЇГ°Г Г§Г­ГЁ ГЄГ«ГҐГІГЄГЁ
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             if (bord[i][j] == 0) {
@@ -20,7 +20,7 @@ void addNewTile() {
         }
     }
 
-    // Добавяне на 2 в случайна празна клетка, ако има налични
+    // Г„Г®ГЎГ ГўГїГ­ГҐ Г­Г  2 Гў Г±Г«ГіГ·Г Г©Г­Г  ГЇГ°Г Г§Г­Г  ГЄГ«ГҐГІГЄГ , Г ГЄГ® ГЁГ¬Г  Г­Г Г«ГЁГ·Г­ГЁ
     if (emptyCount > 0) {
         int randomIndex = GetRandomValue(0, emptyCount - 1);
         int x = emptyCells[randomIndex][0];
@@ -37,32 +37,48 @@ int main()
     InitWindow(screenWidth, screenHeight, "2048 Game in raylib");
     SetTargetFPS(60);
 
-    // Добавяне на първите две произволни числа в полето
+    // Г„Г®ГЎГ ГўГїГ­ГҐ Г­Г  ГЇГєГ°ГўГЁГІГҐ Г¤ГўГҐ ГЇГ°Г®ГЁГ§ГўГ®Г«Г­ГЁ Г·ГЁГ±Г«Г  Гў ГЇГ®Г«ГҐГІГ®
     addNewTile();
     addNewTile();
 
     while (!WindowShouldClose())
     {
-        
-        
+        // РЈРїСЂР°РІР»РµРЅРёРµ РЅР° РёРіСЂР°С‚Р°
+        if (IsKeyPressed(KEY_RIGHT)) {
+            
+            addNewTile();
+        }
+        else if (IsKeyPressed(KEY_LEFT)) {
+            
+            addNewTile();
+        }
+        else if (IsKeyPressed(KEY_UP)) {
+            
+            addNewTile();
+        }
+        else if (IsKeyPressed(KEY_DOWN)) {
+            
+            addNewTile();
+        }
+
 
         BeginDrawing();
         ClearBackground(BEIGE);
 
-        // Заглавие и правила на играта
+        // Г‡Г ГЈГ«Г ГўГЁГҐ ГЁ ГЇГ°Г ГўГЁГ«Г  Г­Г  ГЁГЈГ°Г ГІГ 
         DrawText("2048", 70, 100, 200, WHITE);
         DrawText("RULES:", 5, 340, 20, WHITE);
 
 
-        // Рисуване на полето и показване на стойностите от `bord`
+        // ГђГЁГ±ГіГўГ Г­ГҐ Г­Г  ГЇГ®Г«ГҐГІГ® ГЁ ГЇГ®ГЄГ Г§ГўГ Г­ГҐ Г­Г  Г±ГІГ®Г©Г­Г®Г±ГІГЁГІГҐ Г®ГІ `bord`
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                // Рисуване на клетка
+                // ГђГЁГ±ГіГўГ Г­ГҐ Г­Г  ГЄГ«ГҐГІГЄГ 
                 DrawRectangleLines(740 + j * 120, 125 + i * 120, 120, 120, WHITE);
 
-                // Показване на стойност в клетката (ако има такава)
+                // ГЏГ®ГЄГ Г§ГўГ Г­ГҐ Г­Г  Г±ГІГ®Г©Г­Г®Г±ГІ Гў ГЄГ«ГҐГІГЄГ ГІГ  (Г ГЄГ® ГЁГ¬Г  ГІГ ГЄГ ГўГ )
                 if (bord[i][j] != 0)
                 {
                     char value[8];
