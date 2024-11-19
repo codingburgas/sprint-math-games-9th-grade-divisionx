@@ -28,6 +28,25 @@ void addNewTile() {
         bord[x][y] = 2;
     }
 }
+// Функция за преместване и обединяване на плочки в ляво
+void moveLeft() {
+    for (int i = 0; i < 4; i++) {
+        for (int j = 1; j < 4; j++) {
+            if (bord[i][j] != 0) {
+                int k = j;
+                while (k > 0 && bord[i][k - 1] == 0) {
+                    bord[i][k - 1] = bord[i][k];
+                    bord[i][k] = 0;
+                    k--;
+                }
+                if (k > 0 && bord[i][k] == bord[i][k - 1]) {
+                    bord[i][k - 1] *= 2;
+                    bord[i][k] = 0;
+                }
+            }
+        }
+    }
+}
 // Функция за преместване и обединяване на плочки в дясно
 void moveRight() {
     for (int i = 0; i < 4; i++) {
@@ -68,7 +87,7 @@ int main()
             addNewTile();
         }
         else if (IsKeyPressed(KEY_LEFT)) {
-            
+            moveLeft();
             addNewTile();
         }
         else if (IsKeyPressed(KEY_UP)) {
