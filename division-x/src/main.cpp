@@ -4,12 +4,11 @@
 
 int bord[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
 
-// Ôóíêöèÿ çà äîáàâÿíå íà íîâà äâîéêà íà ïðîèçâîëíà ñâîáîäíà êëåòêà
+// Function to add a new tile to a random empty cell
 void addNewTile() {
     int emptyCells[16][2];
     int emptyCount = 0;
 
-    // Íàìèðàíå íà âñè÷êè ïðàçíè êëåòêè
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             if (bord[i][j] == 0) {
@@ -20,7 +19,6 @@ void addNewTile() {
         }
     }
 
-    // Äîáàâÿíå íà 2 â ñëó÷àéíà ïðàçíà êëåòêà, àêî èìà íàëè÷íè
     if (emptyCount > 0) {
         int randomIndex = GetRandomValue(0, emptyCount - 1);
         int x = emptyCells[randomIndex][0];
@@ -28,7 +26,8 @@ void addNewTile() {
         bord[x][y] = 2;
     }
 }
-// Функция за преместване и обединяване на плочки нагоре
+
+// Move and merge functions
 void moveUp() {
     for (int j = 0; j < 4; j++) {
         for (int i = 1; i < 4; i++) {
@@ -47,7 +46,7 @@ void moveUp() {
         }
     }
 }
-// Функция за преместване и обединяване на плочки в ляво
+
 void moveLeft() {
     for (int i = 0; i < 4; i++) {
         for (int j = 1; j < 4; j++) {
@@ -66,7 +65,7 @@ void moveLeft() {
         }
     }
 }
-// Функция за преместване и обединяване на плочки в дясно
+
 void moveRight() {
     for (int i = 0; i < 4; i++) {
         for (int j = 2; j >= 0; j--) {
@@ -85,7 +84,7 @@ void moveRight() {
         }
     }
 }
-// Функция за преместване и обединяване на плочки надолу
+
 void moveDown() {
     for (int j = 0; j < 4; j++) {
         for (int i = 2; i >= 0; i--) {
@@ -105,69 +104,72 @@ void moveDown() {
     }
 }
 
-int main()
-{
+int main() {
     const int screenWidth = 1280;
     const int screenHeight = 720;
 
-    InitWindow(screenWidth, screenHeight, "2048 Game in raylib");
+    InitWindow(screenWidth, screenHeight, "2048 Game");
     SetTargetFPS(60);
 
-    // Äîáàâÿíå íà ïúðâèòå äâå ïðîèçâîëíè ÷èñëà â ïîëåòî
+    int gameState = 0; // 0 = Menu, 1 = Game
+    int menuSelection = 0;
+
     addNewTile();
     addNewTile();
 
-    while (!WindowShouldClose())
-    {
-        // Управление на играта
-        if (IsKeyPressed(KEY_RIGHT)) {
-            moveRight();
-            addNewTile();
-        }
-        else if (IsKeyPressed(KEY_LEFT)) {
-            moveLeft();
-            addNewTile();
-        }
-        else if (IsKeyPressed(KEY_UP)) {
-            moveUp();
-            addNewTile();
-        }
-        else if (IsKeyPressed(KEY_DOWN)) {
-            moveDown();
-            addNewTile();
-        }
-
-
+    while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BEIGE);
 
-        // Çàãëàâèå è ïðàâèëà íà èãðàòà
-        DrawText("2048", 70, 100, 200, WHITE);
-        DrawText("RULES:", 5, 340, 20, WHITE);
+        if (gameState == 0) {
+            // Menu
+            if (IsKeyPressed(KEY_DOWN)) menuSelection = (menuSelection + 1) % 2;
+            if (IsKeyPressed(KEY_UP)) menuSelection = (menuSelection - 1 + 2) % 2;
 
+            DrawText("2048 GAME", screenWidth / 2 - 150, screenHeight / 3, 50, WHITE);
+            DrawText("Start Game", screenWidth / 2 - 100, screenHeight / 2, 30, menuSelection == 0 ? YELLOW : GRAY);
+            DrawText("Exit", screenWidth / 2 - 50, screenHeight / 2 + 50, 30, menuSelection == 1 ? YELLOW : GRAY);
 
-        // Ðèñóâàíå íà ïîëåòî è ïîêàçâàíå íà ñòîéíîñòèòå îò `bord`
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                // Ðèñóâàíå íà êëåòêà
-                DrawRectangleLines(740 + j * 120, 125 + i * 120, 120, 120, WHITE);
-
-                // Ïîêàçâàíå íà ñòîéíîñò â êëåòêàòà (àêî èìà òàêàâà)
-                if (bord[i][j] != 0)
-                {
-                    char value[8];
-
-                    DrawText(std::to_string(bord[i][j]).c_str(), 790 + j * 120, 165 + i * 120, 40, WHITE);
+            if (IsKeyPressed(KEY_ENTER)) {
+                if (menuSelection == 0) {
+                    gameState = 1;
+                }
+                else {
+                    break;
                 }
             }
         }
+        else if (gameState == 1) {
+            if (IsKeyPressed(KEY_RIGHT)) {
+                moveRight();
+                addNewTile();
+            }
+            else if (IsKeyPressed(KEY_LEFT)) {
+                moveLeft();
+                addNewTile();
+            }
+            else if (IsKeyPressed(KEY_UP)) {
+                moveUp();
+                addNewTile();
+            }
+            else if (IsKeyPressed(KEY_DOWN)) {
+                moveDown();
+                addNewTile();
+            }
 
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    DrawRectangleLines(740 + j * 120, 125 + i * 120, 120, 120, WHITE);
+                    if (bord[i][j] != 0) {
+                        DrawText(std::to_string(bord[i][j]).c_str(), 790 + j * 120, 165 + i * 120, 40, WHITE);
+                    }
+                }
+            }
+        }
 
         EndDrawing();
     }
 
     CloseWindow();
-
+    return 0;
 }
