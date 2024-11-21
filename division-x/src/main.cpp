@@ -1,8 +1,9 @@
 ﻿#include "raylib.h"
 #include <stdio.h>
 #include <string>
+#include <array>
 
-int bord[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} };
+std::array<std::array<int, 4>, 4> bord = { 0 };
 
 // Function to add a new tile to a random empty cell
 void addNewTile() {
@@ -102,6 +103,37 @@ void moveDown() {
             }
         }
     }
+}bool isThereChange(std::string  dir)
+{
+    std::array<std::array<int, 4>, 4> oldboard = bord;
+    if (dir == "right")
+    {
+        moveRight();
+    }
+    else if(dir == "left")
+    {
+        moveLeft();
+    }
+    else if (dir == "up")
+    {
+        moveUp();
+    }
+    else
+    {
+        moveDown();
+    }
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            if (bord[i][j] != oldboard[i][j])
+            {
+                return(true);
+            }
+
+        }
+    }
+    return false;
 }
 
 int main() {
@@ -141,20 +173,29 @@ int main() {
         }
         else if (gameState == 1) {
             if (IsKeyPressed(KEY_RIGHT)) {
-                moveRight();
-                addNewTile();
+                if (isThereChange("right"))
+                {
+                    addNewTile();
+                }
+                
             }
             else if (IsKeyPressed(KEY_LEFT)) {
-                moveLeft();
-                addNewTile();
+                if (isThereChange("left"))
+                {
+                    addNewTile();
+                }
             }
             else if (IsKeyPressed(KEY_UP)) {
-                moveUp();
-                addNewTile();
+                if (isThereChange("up"))
+                {
+                    addNewTile();
+                }
             }
             else if (IsKeyPressed(KEY_DOWN)) {
-                moveDown();
-                addNewTile();
+                if (isThereChange("down"))
+                {
+                    addNewTile();
+                }
             }
 
             for (int i = 0; i < 4; i++) {
