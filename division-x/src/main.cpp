@@ -135,6 +135,23 @@ void moveDown() {
     }
     return false;
 }
+Color getTileColor(int value) {
+    switch (value) {
+    case 0: return BROWN;
+    case 2: return LIGHTGRAY;
+    case 4: return GRAY;
+    case 8: return ORANGE;
+    case 16: return RED;
+    case 32: return DARKPURPLE;
+    case 64: return PURPLE;
+    case 128: return YELLOW;
+    case 256: return GOLD;
+    case 512: return MAROON;
+    case 1024: return DARKBLUE;
+    case 2048: return GREEN;
+    default: return BLACK; // За по-големи числа
+    }
+}
 
 int main() {
     const int screenWidth = 1280;
@@ -200,7 +217,7 @@ int main() {
 
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 4; j++) {
-                    DrawRectangleLines(740 + j * 120, 125 + i * 120, 120, 120, WHITE);
+                    DrawRectangle(740 + j * 120, 125 + i * 120, 120, 120, getTileColor(bord[i][j]));
                     if (bord[i][j] != 0) {
                         DrawText(std::to_string(bord[i][j]).c_str(), 790 + j * 120, 165 + i * 120, 40, WHITE);
                     }
@@ -212,5 +229,5 @@ int main() {
     }
 
     CloseWindow();
-    return 0;
+    
 }
