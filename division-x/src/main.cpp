@@ -149,8 +149,18 @@ Color getTileColor(int value) {
     case 512: return MAROON;
     case 1024: return DARKBLUE;
     case 2048: return GREEN;
-    default: return BLACK; // За по-големи числа
+    default: return BLACK; 
     }
+}
+bool isGameOver() {
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (bord[i][j] == 0) return false; // Празна клетка
+            if (i < 3 && bord[i][j] == bord[i + 1][j]) return false; // Надолу
+            if (j < 3 && bord[i][j] == bord[i][j + 1]) return false; // Надясно
+        }
+    }
+    return true; // Няма възможни ходове
 }
 
 int main() {
@@ -188,7 +198,9 @@ int main() {
                 }
             }
         }
+
         else if (gameState == 1) {
+           
             if (IsKeyPressed(KEY_RIGHT)) {
                 if (isThereChange("right"))
                 {
@@ -196,6 +208,7 @@ int main() {
                 }
                 
             }
+
             else if (IsKeyPressed(KEY_LEFT)) {
                 if (isThereChange("left"))
                 {
@@ -221,6 +234,15 @@ int main() {
                     if (bord[i][j] != 0) {
                         DrawText(std::to_string(bord[i][j]).c_str(), 790 + j * 120, 165 + i * 120, 40, WHITE);
                     }
+                }
+            }
+            if (isGameOver()) {
+                DrawText("Game Over!", screenWidth / 2 - 150, screenHeight / 2, 50, RED);
+                if (IsKeyPressed(KEY_ENTER)) {
+                    gameState = 0; // Връщане към менюто
+                    bord = { 0 };
+                    addNewTile();
+                    addNewTile();
                 }
             }
         }
