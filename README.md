@@ -1,6 +1,8 @@
 # Sprint-9th-grade-Math-Games
+## 2048 Game
 <p align="center">
-# ***2048 GAME***
+
+
 
 ## 📋 Idea of the game
 ### The idea is to improve your logical thinking.
