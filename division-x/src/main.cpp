@@ -176,9 +176,12 @@ int main() {
     addNewTile();
     addNewTile();
 
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BEIGE);
+        
+
 
         if (gameState == 0) {
             // Menu
@@ -191,7 +194,7 @@ int main() {
 
             if (IsKeyPressed(KEY_ENTER)) {
                 if (menuSelection == 0) {
-                    gameState = 1;
+                    gameState = 1; 
                 }
                 else {
                     break;
@@ -200,6 +203,21 @@ int main() {
         }
 
         else if (gameState == 1) {
+            DrawText("2048", 70, 100, 200, WHITE);
+            DrawText("Rulse:The game concept is simple and complex at the same time. ", 5, 300, 20, WHITE);
+            DrawText("To only rule of the game is that you have to", 5, 320, 20, WHITE);
+            DrawText("merge 2 tiles with the same numerical value and then they become 1 tile ", 5, 340, 20, WHITE);
+            DrawText(" with x2 of their original value then you have to merge this new x2 tile", 5, 360, 20, WHITE);
+            DrawText(" with another x2 tile until you reach 2048.", 5, 380, 20, WHITE);
+            DrawText("You cant continue the game?That isn't problem.", 5 , 400 ,20 ,WHITE);
+            DrawText("Just preas R buton to reset the game.Don't thank me ;-).", 5, 420, 20, WHITE);
+           
+            if (IsKeyPressed(KEY_R))
+            {
+                bord = { 0 };
+                addNewTile();
+                addNewTile();
+             }
            
             if (IsKeyPressed(KEY_RIGHT)) {
                 if (isThereChange("right"))
@@ -246,6 +264,7 @@ int main() {
                 }
             }
         }
+       
 
         EndDrawing();
     }
