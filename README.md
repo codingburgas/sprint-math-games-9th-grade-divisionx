@@ -65,7 +65,7 @@
 | :---:   | :---: | :---: |
 | Beloslava Ileva| Scum trainer | 🟦 9G |
 | Gabriela Badalova | Front - End Developer  | 🟥 9B |
-| Kaloyan Kolev | Back-end developer  | 🟨 9A |
+| Kaloyan Kolev | Back - End developer  | 🟨 9A |
 | Emanuela Mancheva | Design  | 🟨 9A |
 | Irina Dimova |    | 🟨 9A |
  
