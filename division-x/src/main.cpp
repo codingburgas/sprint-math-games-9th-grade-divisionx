@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <string>
 #include <array>
+#include<iostram>
 
 std::array<std::array<int, 4>, 4> bord = { 0 };
+int score = 0;
 
 // Function to add a new tile to a random empty cell
 void addNewTile() {
@@ -42,12 +44,13 @@ void moveUp() {
                 if (k > 0 && bord[k][j] == bord[k - 1][j]) {
                     bord[k - 1][j] *= 2;
                     bord[k][j] = 0;
+                    score += bord[k - 1][j];
                 }
             }
         }
     }
 }
-
+cout << score;
 void moveLeft() {
     for (int i = 0; i < 4; i++) {
         for (int j = 1; j < 4; j++) {
@@ -87,16 +90,20 @@ void moveRight() {
 }
 
 void moveDown() {
-    for (int j = 0; j < 4; j++) {
-        for (int i = 2; i >= 0; i--) {
+    for (int j = 0; j < 4; j++) 
+    {
+        for (int i = 2; i >= 0; i--) 
+        {
             if (bord[i][j] != 0) {
                 int k = i;
-                while (k < 3 && bord[k + 1][j] == 0) {
+                while (k < 3 && bord[k + 1][j] == 0) 
+                {
                     bord[k + 1][j] = bord[k][j];
                     bord[k][j] = 0;
                     k++;
                 }
-                if (k < 3 && bord[k][j] == bord[k + 1][j]) {
+                if (k < 3 && bord[k][j] == bord[k + 1][j]) 
+                {
                     bord[k + 1][j] *= 2;
                     bord[k][j] = 0;
                 }
@@ -158,13 +165,14 @@ Color getTileColor(int value) {
 bool isGameOver() {
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            if (bord[i][j] == 0) return false; // Empty cell
-            if (i < 3 && bord[i][j] == bord[i + 1][j]) return false; // Down
-            if (j < 3 && bord[i][j] == bord[i][j + 1]) return false; // Right
+            if (bord[i][j] == 0) return false; 
+            if (i < 3 && bord[i][j] == bord[i + 1][j]) return false; 
+            if (j < 3 && bord[i][j] == bord[i][j + 1]) return false; 
         }
     }
-    return true; // No possible moves
+    return true; 
 }
+
 
 int main() {
     const int screenWidth = 1280;
@@ -173,8 +181,9 @@ int main() {
     InitWindow(screenWidth, screenHeight, "2048 Game");
     SetTargetFPS(60);
 
-    int gameState = 0; // 0 = Menu, 1 = Game
+    int gameState = 0; 
     int menuSelection = 0;
+   
 
     addNewTile();
     addNewTile();
@@ -222,7 +231,7 @@ int main() {
                 bord = { 0 };
                 addNewTile();
                 addNewTile();
-             }
+            }
            // Move blocks
             if (IsKeyPressed(KEY_RIGHT)) {
                 if (isThereChange("right"))
