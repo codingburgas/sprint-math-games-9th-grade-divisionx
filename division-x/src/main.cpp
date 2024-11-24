@@ -134,7 +134,9 @@ void moveDown() {
         }
     }
     return false;
+
 }
+//Change color when your archive highter numbers
 Color getTileColor(int value) {
     switch (value) {
     case 0: return BROWN;
@@ -152,15 +154,16 @@ Color getTileColor(int value) {
     default: return BLACK; 
     }
 }
+//  Game over
 bool isGameOver() {
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            if (bord[i][j] == 0) return false; // Празна клетка
-            if (i < 3 && bord[i][j] == bord[i + 1][j]) return false; // Надолу
-            if (j < 3 && bord[i][j] == bord[i][j + 1]) return false; // Надясно
+            if (bord[i][j] == 0) return false; // Empty cell
+            if (i < 3 && bord[i][j] == bord[i + 1][j]) return false; // Down
+            if (j < 3 && bord[i][j] == bord[i][j + 1]) return false; // Right
         }
     }
-    return true; // Няма възможни ходове
+    return true; // No possible moves
 }
 
 int main() {
@@ -201,8 +204,8 @@ int main() {
                 }
             }
         }
-
-        else if (gameState == 1) {
+        // Rulse
+        else if (gameState == 1) { 
             DrawText("2048", 70, 100, 200, WHITE);
             DrawText("Rulse:The game concept is simple and complex at the same time. ", 5, 300, 20, WHITE);
             DrawText("To only rule of the game is that you have to", 5, 320, 20, WHITE);
@@ -211,14 +214,16 @@ int main() {
             DrawText(" with another x2 tile until you reach 2048.", 5, 380, 20, WHITE);
             DrawText("You cant continue the game?That isn't problem.", 5 , 400 ,20 ,WHITE);
             DrawText("Just preas R buton to reset the game.Don't thank me ;-).", 5, 420, 20, WHITE);
-           
+            //In renderring function(Draw):
+            
+           // Restart game
             if (IsKeyPressed(KEY_R))
             {
                 bord = { 0 };
                 addNewTile();
                 addNewTile();
              }
-           
+           // Move blocks
             if (IsKeyPressed(KEY_RIGHT)) {
                 if (isThereChange("right"))
                 {
@@ -257,7 +262,7 @@ int main() {
             if (isGameOver()) {
                 DrawText("Game Over!", screenWidth / 2 - 150, screenHeight / 2, 50, RED);
                 if (IsKeyPressed(KEY_ENTER)) {
-                    gameState = 0; // Връщане към менюто
+                    gameState = 0; // Return to menu
                     bord = { 0 };
                     addNewTile();
                     addNewTile();
