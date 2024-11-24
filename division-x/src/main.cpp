@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <string>
 #include <array>
-#include<iostram>
+using namespace std;
 
-std::array<std::array<int, 4>, 4> bord = { 0 };
-int score = 0;
+array<array<int, 4>, 4> bord = { 0 };
+
 
 // Function to add a new tile to a random empty cell
 void addNewTile() {
@@ -44,13 +44,13 @@ void moveUp() {
                 if (k > 0 && bord[k][j] == bord[k - 1][j]) {
                     bord[k - 1][j] *= 2;
                     bord[k][j] = 0;
-                    score += bord[k - 1][j];
+                  
                 }
             }
         }
     }
 }
-cout << score;
+
 void moveLeft() {
     for (int i = 0; i < 4; i++) {
         for (int j = 1; j < 4; j++) {
@@ -110,9 +110,9 @@ void moveDown() {
             }
         }
     }
-}bool isThereChange(std::string  dir)
+}bool isThereChange(string  dir)
 {
-    std::array<std::array<int, 4>, 4> oldboard = bord;
+    array<array<int, 4>, 4> oldboard = bord;
     if (dir == "right")
     {
         moveRight();
@@ -264,7 +264,7 @@ int main() {
                 for (int j = 0; j < 4; j++) {
                     DrawRectangle(740 + j * 120, 125 + i * 120, 120, 120, getTileColor(bord[i][j]));
                     if (bord[i][j] != 0) {
-                        DrawText(std::to_string(bord[i][j]).c_str(), 790 + j * 120, 165 + i * 120, 40, WHITE);
+                        DrawText(to_string(bord[i][j]).c_str(), 790 + j * 120, 165 + i * 120, 40, WHITE);
                     }
                 }
             }
